@@ -1,4 +1,4 @@
-# MovieApp_JetPackCompose
+# MovieFlix - JetPackCompose
 A Simple Jetpack Compose project
 
 Things to learn
