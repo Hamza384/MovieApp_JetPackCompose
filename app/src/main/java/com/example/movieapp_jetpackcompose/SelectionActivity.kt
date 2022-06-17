@@ -1,5 +1,6 @@
 package com.example.movieapp_jetpackcompose
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,13 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp_jetpackcompose.model.CategoriesModel
 import com.example.movieapp_jetpackcompose.model.MovieModel
 import com.example.movieapp_jetpackcompose.ui.theme.BackgroundColor
 import com.example.movieapp_jetpackcompose.ui.theme.Poppins
 import com.example.movieapp_jetpackcompose.utils.Constants
+import com.gowtham.ratingbar.RatingBar
+import com.gowtham.ratingbar.RatingBarConfig
+import com.gowtham.ratingbar.RatingBarStyle
 
 
 @Composable
@@ -53,7 +56,7 @@ fun HomeComponent(navController: NavController) {
             Spacer(modifier = Modifier.height(10.dp))
             PopularMovies()
             Spacer(modifier = Modifier.height(10.dp))
-            MoviesLists()
+            MoviesLists(navController)
         }
     }
 
@@ -154,19 +157,19 @@ fun CategoriesList() {
 
 
 @Composable
-fun MoviesLists() {
+fun MoviesLists(navController: NavController) {
 
     val movieList = mutableListOf<MovieModel>()
-    movieList.add(MovieModel(R.drawable.la_casa, "La Case", 2))
-    movieList.add(MovieModel(R.drawable.image1, "Inception", 2))
-    movieList.add(MovieModel(R.drawable.imag2, "Maleficent", 2))
-    movieList.add(MovieModel(R.drawable.image3, "BloodShot", 2))
-    movieList.add(MovieModel(R.drawable.image4, "Veloziz, Furious", 2))
+    movieList.add(MovieModel(R.drawable.la_casa, "La Case", 3.8F))
+    movieList.add(MovieModel(R.drawable.image1, "Inception", 5.0F))
+    movieList.add(MovieModel(R.drawable.imag2, "Maleficent", 4.5F))
+    movieList.add(MovieModel(R.drawable.image3, "BloodShot", 4.0F))
+    movieList.add(MovieModel(R.drawable.image4, "Veloziz, Furious", 4.8F))
 
 
     LazyRow(modifier = Modifier.fillMaxWidth()) {
         items(movieList) {
-            PopularMoviesList(movieModel = it)
+            PopularMoviesList(movieModel = it, navController)
         }
     }
 
@@ -217,7 +220,7 @@ fun CategoryListRow(categoryModel: CategoriesModel) {
 
 
 @Composable
-fun PopularMoviesList(movieModel: MovieModel) {
+fun PopularMoviesList(movieModel: MovieModel, navController: NavController) {
 
     val mContext = LocalContext.current
 
@@ -241,10 +244,7 @@ fun PopularMoviesList(movieModel: MovieModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        Constants.showToast(
-                            mContext,
-                            movieModel.name
-                        )
+                        navController.navigate(NavRoutes.DetailScreen.routes)
                     }
             )
         }
@@ -259,6 +259,30 @@ fun PopularMoviesList(movieModel: MovieModel) {
             ),
             textAlign = TextAlign.Center
         )
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+            var rating = movieModel.rating
+            RatingBar(
+                value = rating,
+                config = RatingBarConfig()
+                    .style(RatingBarStyle.HighLighted),
+                onValueChange = {
+                    rating = it
+                },
+                onRatingChanged = {
+                    Log.d("TAG", "onRatingChanged: $it")
+                }
+            )
+        }
+
+
+
+
 
     }
 

@@ -1,5 +1,6 @@
 package com.example.movieapp_jetpackcompose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,8 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,7 +24,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp_jetpackcompose.ui.theme.BackgroundColor
 import com.example.movieapp_jetpackcompose.ui.theme.Poppins
-import com.example.movieapp_jetpackcompose.utils.NavRoutes
 
 
 @Composable
@@ -46,9 +48,59 @@ fun SplashContent(navController: NavController) {
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
+        verticalArrangement = Arrangement.SpaceBetween
+
     ) {
-        ButtonNext(navController)
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Welcome to,",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight.Medium
+                ),
+                modifier = Modifier.alpha(0f)
+            )
+
+            Text(
+                text = "MovieFlix",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 30.sp,
+                    fontFamily = Poppins,
+                    fontWeight = FontWeight.Medium
+                )
+            )
+        }
+
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_splash),
+            contentDescription = "Splash Image",
+            modifier = Modifier
+                .height(400.dp)
+                .width(400.dp)
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Spacer(modifier = Modifier.height(50.dp))
+            ButtonNext(navController)
+        }
+
+
     }
 
 }
@@ -60,16 +112,16 @@ fun ButtonNext(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
-        horizontalArrangement = Arrangement.End
+        horizontalArrangement = Arrangement.Center
     ) {
         Card(
             modifier = Modifier
-                .height(50.dp)
-                .width(150.dp)
+                .height(60.dp)
+                .width(300.dp)
                 .padding(4.dp)
-                .clip(RoundedCornerShape(24.dp))
+                .clip(RoundedCornerShape(8.dp))
                 .clickable {
-                    navController.navigate(NavRoutes.MainActivity.routes)
+                    navController.navigate(NavRoutes.MainScreen.routes)
                 },
             backgroundColor = Color(0xFF161A37),
         ) {

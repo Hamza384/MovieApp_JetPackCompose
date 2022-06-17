@@ -10,6 +10,7 @@ import com.example.movieapp_jetpackcompose.ui.theme.MovieApp_JetPackComposeTheme
 
 class MainActivity : ComponentActivity() {
 
+
     lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieApp_JetPackComposeTheme {
                 navController = rememberNavController()
-                NavHostController(navController = navController)
+                SetUpNavGraph(navController = navController)
             }
         }
     }
